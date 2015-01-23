@@ -1,0 +1,4 @@
+---
+
+- name: install Db 
+  action: apt pkg={{ dbservers_pkg_list }} state=installed

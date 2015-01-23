@@ -1,0 +1,22 @@
+---
+
+- name: create directory structure
+  file: path={{doc_root}}/current state=directory
+
+
+- name: Install apache and php
+  action: apt pkg={{ webservers_pkg_list }} state=installed
+
+- name: Create Virtual host file
+  template: src=example.com.conf dest=/etc/apache2/sites-available/{{ domain_name }}.conf
+
+- file: src=/etc/apache2/sites-available/{{ domain_name }}.conf dest=/etc/apache2/sites-enabled/{{ domain_name }}.conf owner=root group=root state=link
+  notify: 
+    - restart apache2
+
+- name: Create index file
+  template: src=index.html.j2    dest={{ doc_root }}/index.html
+  notify:
+    - restart apache2
+
+

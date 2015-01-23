@@ -1,0 +1,20 @@
+---
+- name: Apply common configuration to all nodes
+  hosts: all
+  remote_user: root
+
+  roles:
+    - common
+
+- name: Setup web servers
+  hosts: webservers
+  remote_user: root
+
+  roles:
+    - web
+- name: Setup db servers
+  hosts: dbservers
+  remote_user: root
+
+  roles:
+    - db
