@@ -2,3 +2,24 @@
 
 - name: install Db 
   action: apt pkg={{ dbservers_pkg_list }} state=installed
+
+- name: Copy the my.cnf
+  template: src=my.cnf dest=/root/.my.cnf owner=root mode=0600
+
+- name: Replace my.cnf
+  template: src=my.cnf.replace dest=/root/.my.cnf owner=root mode=0660 force=yes
+  when: db_current_password == ""
+
+- name: Update MySQL Root Password
+  mysql_user: name=root host={{ item }} password={{ root_db_password_new }}
+  with_items:
+    - 127.0.0.1
+    - ::1
+    - localhost
+  when: root_db_password_new == "" 
+
+
+
+
+- name: Create database
+  mysql_db: name={{ db_name }} state=present

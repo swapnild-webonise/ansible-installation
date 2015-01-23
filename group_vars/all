@@ -7,4 +7,8 @@ webservers_pkg_list: apache2,php5,libapache2-mod-php5,php5-mcrypt
 
 dbservers_pkg_list: mysql-server,libapache2-mod-auth-mysql,php5-mysql,python-mysqldb
 
-mysql_root_password: machine123
+root_db_password_new: swapnil
+
+db_current_password: ''
+
+db_name: wordpress
